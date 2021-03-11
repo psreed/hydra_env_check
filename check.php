@@ -40,6 +40,8 @@ function curl_check($url) {
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_VERBOSE, false);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5); //timeout in seconds
     $info=curl_exec($ch);
     $info=curl_getinfo($ch);
     return ($info);
