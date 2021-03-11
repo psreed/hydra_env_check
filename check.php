@@ -29,6 +29,7 @@ function update_sheet_cell($google_sheet_id, $range, $val) {
         'valueInputOption' => $valueInputOption
     ];
     $result = $service->spreadsheets_values->update($spreadsheetId, $range, $body, $params);
+    print_r($result);
 }
 
 function curl_check($url) {
