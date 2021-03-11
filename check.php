@@ -77,16 +77,44 @@ foreach($rows as $row=>$data) {
         $col="B";
         $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}","True");
 
-        // Welcome Page http_code
         $col="C";
+        $result=gethostbyname($data[0].".classroom.puppet.com");
+        $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$result);
+
+        // Welcome Page http_code
+        $col="D";
         $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$curl_result['http_code']);
 
         //PE Admin console
-        $col="D";
-        $url='https://'.$data[0]."master0.classroom.puppet.com";
+        $col="E";
+        $url='https://'.$data[0]."-master.classroom.puppet.com";
         $curl_result=curl_check($url);
         $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$curl_result['http_code']);
-    
+
+        //CD4PE
+        $col="F";
+        $url='https://'.$data[0]."-cd4pe.classroom.puppet.com";
+        $curl_result=curl_check($url);
+        $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$curl_result['http_code']);
+        
+        //Remediate
+        $col="G";
+        $url='https://'.$data[0]."-remediate.classroom.puppet.com";
+        $curl_result=curl_check($url);
+        $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$curl_result['http_code']);
+        
+        //Gitlab
+        $col="H";
+        $url='https://'.$data[0]."-gitlab.classroom.puppet.com";
+        $curl_result=curl_check($url);
+        $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$curl_result['http_code']);
+        
+        //Comply
+        $col="I";
+        $url='https://'.$data[0]."comply0.classroom.puppet.com";
+        $curl_result=curl_check($url);
+        $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$curl_result['http_code']);
+        
     }
 
 
