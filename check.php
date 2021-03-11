@@ -16,6 +16,7 @@ function getGClient($credfile='credentials.json')
 
 function update_sheet_cell($google_sheet_id, $range, $val) {
     global $service;
+    $valueInputOption = 'USER_ENTERED';
     $values = [
         [
             // Cell values ...
@@ -27,7 +28,7 @@ function update_sheet_cell($google_sheet_id, $range, $val) {
         'values' => $values
     ]);
     $params = [
-//        'valueInputOption' => $valueInputOption
+        'valueInputOption' => $valueInputOption
     ];
     $result = $service->spreadsheets_values->update($google_sheet_id, $range, $body, $params);
     print_r($result);
