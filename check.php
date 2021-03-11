@@ -50,11 +50,14 @@ $header_row = $response->getValues();
 print_r($header_row);
 
 // Sheet info
-$range="${sheet}!A2:AAA";
+$data_start_row=2;
+$range="${sheet}!A${data_start_row}:AAA";
 $response = $service->spreadsheets_values->get($config['google_sheet_id'], $range);
 $rows = $response->getValues();
 
 foreach($rows as $row=>$data) {
+    $row+=$data_start_row;
+
     echo $data[0]."\n";
 
     // Checked
