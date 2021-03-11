@@ -41,6 +41,7 @@ function curl_check($url) {
 }
 
 $client = getGClient("google_credentials.json");
+$client->addScope(Google_Service_Sheets::SPREADSHEETS);
 $service = new Google_Service_Sheets($client);
 
 // Sheet Headerinfo
