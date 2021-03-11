@@ -20,7 +20,7 @@ function update_sheet_cell($google_sheet_id, $range, $val) {
     $values = [
         [
             // Cell values ...
-            "test"
+            $val
         ],
         // Additional rows ...
     ];
@@ -62,14 +62,18 @@ $rows = $response->getValues();
 foreach($rows as $row=>$data) {
     $row+=$data_start_row;
 
-    echo $data[0]."\n";
+    // echo $data[0]."\n";
 
     // Checked
     $col="B";
     $range="${sheet}!${col}${row}:${col}${row}";
+    
+    $url='https://'.$data[0].".classroom.puppet.com";
+    $result=curl_check($url);
+    print_r($result);
 
-    echo "Updating `${range}`:\n";
-    update_sheet_cell($config['google_sheet_id'],$range,"Yes!");
+    //echo "Updating `${range}`:\n";
+    update_sheet_cell($config['google_sheet_id'],$range,"true");
 
     break;
 }
