@@ -1,5 +1,6 @@
 #!/usr/bin/php
 <?php
+set_time_limit(0);
 
 $config = json_decode(file_get_contents('config.json'),true);
 require_once 'vendor/autoload.php';
