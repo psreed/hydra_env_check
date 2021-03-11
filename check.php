@@ -68,52 +68,66 @@ foreach($rows as $row=>$data) {
 //    if ($data[0]!="spp0309") continue;
     $row+=$data_start_row;
 
+    if (preg_match("/true/i",$data[1])) continue;
+
     $url='https://'.$data[0].".classroom.puppet.com";
     $curl_result=curl_check($url);
 
     if (is_array($curl_result)) {
 
+        // Sleeps due to Google Sheet usage limits ..
+        // This version of the Google Sheets API has a limit of 500 requests per 100 seconds per project, and 100 requests per 100 seconds per user. Limits for reads and writes are tracked separately. There is no daily usage limit.
+        sleep(2);
+
         // Checked
         $col="B";
         $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}","True");
+        sleep(1);
 
         $col="C";
         $result=gethostbyname($data[0].".classroom.puppet.com");
         $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$result);
+        sleep(1);
 
         // Welcome Page http_code
         $col="D";
         $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$curl_result['http_code']);
+        sleep(1);
 
         //PE Admin console
         $col="E";
         $url='https://'.$data[0]."-master.classroom.puppet.com";
         $curl_result=curl_check($url);
         $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$curl_result['http_code']);
+        sleep(1);
 
         //CD4PE
         $col="F";
         $url='https://'.$data[0]."-cd4pe.classroom.puppet.com";
         $curl_result=curl_check($url);
         $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$curl_result['http_code']);
+        sleep(1);
         
         //Remediate
         $col="G";
         $url='https://'.$data[0]."-remediate.classroom.puppet.com";
         $curl_result=curl_check($url);
         $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$curl_result['http_code']);
+        sleep(1);
         
         //Gitlab
         $col="H";
         $url='https://'.$data[0]."-gitlab.classroom.puppet.com";
         $curl_result=curl_check($url);
         $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$curl_result['http_code']);
+        sleep(1);
         
         //Comply
         $col="I";
         $url='https://'.$data[0]."comply0.classroom.puppet.com";
         $curl_result=curl_check($url);
         $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$curl_result['http_code']);
+        sleep(1);
         
     }
 
