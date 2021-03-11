@@ -16,8 +16,8 @@ function getGClient($credfile='credentials.json')
 
 function curl_check_200($url) {
     $ch = curl_init($url);
-    curl_exec($sh);
-    $info=curl_getinfo($ch);
+    $info=curl_exec($sh);
+    //$info=curl_getinfo($ch);
     return ($info);
 }
 
