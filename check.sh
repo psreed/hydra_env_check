@@ -1,4 +1,4 @@
 #!/bin/sh
 clear
 git pull
-./check.php
+/usr/bin/php ./check.php
