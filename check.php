@@ -14,7 +14,7 @@ function getGClient($credfile='credentials.json')
     return $client;
 }
 
-function update_sheet_cell($google_sheet_id, $range, $val) {
+function update_sheet_cell($service, $google_sheet_id, $range, $val) {
     $values = [
         [
             // Cell values ...
@@ -66,7 +66,7 @@ foreach($rows as $row=>$data) {
     $range="${sheet}!${col}${row}:${col}${row}";
 
     echo "Updating `${range}`:\n";
-    update_sheet_cell($config['google_sheet_id'],$range,"Yes!");
+    update_sheet_cell($service, $config['google_sheet_id'],$range,"Yes!");
 
     break;
 }
