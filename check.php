@@ -28,7 +28,7 @@ function update_sheet_cell($service, $google_sheet_id, $range, $val) {
     $params = [
         'valueInputOption' => $valueInputOption
     ];
-    $result = $service->spreadsheets_values->update($spreadsheetId, $range, $body, $params);
+    $result = $service->spreadsheets_values->update($google_sheet_id, $range, $body, $params);
     print_r($result);
 }
 
