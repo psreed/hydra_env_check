@@ -37,7 +37,8 @@ function update_sheet_cell($google_sheet_id, $range, $val) {
 function curl_check($url) {
     echo "Checking URL: ".$url."\n";
     $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_MUTE, 1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_VERBOSE, false);
     $info=curl_exec($ch);
     $info=curl_getinfo($ch);
     return ($info);
