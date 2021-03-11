@@ -14,7 +14,24 @@ function getGClient($credfile='credentials.json')
     return $client;
 }
 
-function curl_check_200($url) {
+function update_sheet_cell($google_sheet_id, $range, $val) {
+    $values = [
+        [
+            // Cell values ...
+            $val
+        ],
+        // Additional rows ...
+    ];
+    $body = new Google_Service_Sheets_ValueRange([
+        'values' => $values
+    ]);
+    $params = [
+        'valueInputOption' => $valueInputOption
+    ];
+    $result = $service->spreadsheets_values->update($spreadsheetId, $range, $body, $params);
+}
+
+function curl_check($url) {
     $ch = curl_init($url);
     $info=curl_exec($ch);
     $info=curl_getinfo($ch);
@@ -25,25 +42,31 @@ $client = getGClient("google_credentials.json");
 $service = new Google_Service_Sheets($client);
 
 // Sheet Headerinfo
-$range='Sheet1!A1:Z1';
+$sheet='Sheet1';
+$range="${sheet}!A1:Z1";
 $response = $service->spreadsheets_values->get($config['google_sheet_id'], $range);
 $header_row = $response->getValues();
 
 print_r($header_row);
 
 // Sheet info
-$range='Sheet1!A2:AAA';
+$range="${sheet}!A2:AAA";
 $response = $service->spreadsheets_values->get($config['google_sheet_id'], $range);
 $rows = $response->getValues();
 
-foreach($rows as $row) {
-//    echo $row[0]."\n";
+foreach($rows as $row=>$data) {
+    echo $data[0]."\n";
 
-//spp0309
+    // Checked
+    $col="B";
+    $range="${sheet}!${col}${row}:${col}${row}";
 
+    update_sheet_cell($config['google_sheet_id'],$range,"Yes!");
+
+    break;
 }
 
-print_r(curl_check_200('https://spp0309.classroom.puppet.com'));
+//print_r(curl_check_200('https://spp0309.classroom.puppet.com'));
 
 //print_r($config);
 
