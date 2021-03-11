@@ -14,8 +14,22 @@ function getGClient($credfile='credentials.json')
     return $client;
 }
 
+function curl_check_200($url) {
+    $ch = curl_init($url);
+    curl_exec($sh);
+    $info=curl_getinfo($ch);
+    return ($info);
+}
+
 $client = getGClient("google_credentials.json");
 $service = new Google_Service_Sheets($client);
+
+// Sheet Headerinfo
+$range='Sheet1!A1:Z1';
+$response = $service->spreadsheets_values->get($config['google_sheet_id'], $range);
+$header_row = $response->getValues();
+
+print_r($header_row);
 
 // Sheet info
 $range='Sheet1!A2:AAA';
@@ -23,9 +37,13 @@ $response = $service->spreadsheets_values->get($config['google_sheet_id'], $rang
 $rows = $response->getValues();
 
 foreach($rows as $row) {
-    echo $row[0]."\n";
+//    echo $row[0]."\n";
+
+//spp0309
+
 }
 
+print_r(curl_check_200('https://spp0309.classroom.puppet.com'));
 
 //print_r($config);
 
