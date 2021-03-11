@@ -61,6 +61,7 @@ foreach($rows as $row=>$data) {
     $col="B";
     $range="${sheet}!${col}${row}:${col}${row}";
 
+    echo "Updating `${range}`:\n";
     update_sheet_cell($config['google_sheet_id'],$range,"Yes!");
 
     break;
