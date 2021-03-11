@@ -69,7 +69,7 @@ foreach($rows as $row=>$data) {
 //    if ($data[0]!="spp0309") continue;
     $row+=$data_start_row;
 
-    if (preg_match("/true/i",$data[1])) continue;
+    if (isset($data[1]) && preg_match("/true/i",$data[1])) continue;
 
     $url='https://'.$data[0].".classroom.puppet.com";
     $curl_result=curl_check($url);
