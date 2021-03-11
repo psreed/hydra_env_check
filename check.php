@@ -14,11 +14,12 @@ function getGClient($credfile='credentials.json')
     return $client;
 }
 
-function update_sheet_cell($service, $google_sheet_id, $range, $val) {
+function update_sheet_cell($google_sheet_id, $range, $val) {
+    global $service;
     $values = [
         [
             // Cell values ...
-            "test",
+            "test"
         ],
         // Additional rows ...
     ];
@@ -26,7 +27,7 @@ function update_sheet_cell($service, $google_sheet_id, $range, $val) {
         'values' => $values
     ]);
     $params = [
-//        'valueInputOption' => $valueInputOption
+        'valueInputOption' => $valueInputOption
     ];
     $result = $service->spreadsheets_values->update($google_sheet_id, $range, $body, $params);
     print_r($result);
@@ -66,7 +67,7 @@ foreach($rows as $row=>$data) {
     $range="${sheet}!${col}${row}:${col}${row}";
 
     echo "Updating `${range}`:\n";
-    update_sheet_cell($service, $config['google_sheet_id'],$range,"Yes!");
+    update_sheet_cell($config['google_sheet_id'],$range,"Yes!");
 
     break;
 }
