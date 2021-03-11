@@ -31,7 +31,7 @@ function update_sheet_cell($google_sheet_id, $range, $val) {
         'valueInputOption' => $valueInputOption
     ];
     $result = $service->spreadsheets_values->update($google_sheet_id, $range, $body, $params);
-    print_r($result);
+    return $result;
 }
 
 function curl_check($url) {
@@ -59,21 +59,33 @@ $range="${sheet}!A${data_start_row}:AAA";
 $response = $service->spreadsheets_values->get($config['google_sheet_id'], $range);
 $rows = $response->getValues();
 
+$test="spp0309";
+
 foreach($rows as $row=>$data) {
+    if ($data[0]!="spp0309") continue;
     $row+=$data_start_row;
 
-    // echo $data[0]."\n";
-
-    // Checked
-    $col="B";
-    $range="${sheet}!${col}${row}:${col}${row}";
-    
     $url='https://'.$data[0].".classroom.puppet.com";
-    $result=curl_check($url);
-    print_r($result);
+    $curl_result=curl_check($url);
 
-    //echo "Updating `${range}`:\n";
-    update_sheet_cell($config['google_sheet_id'],$range,"true");
+    if (is_array($curl_result)) {
+
+        // Checked
+        $col="B";
+        $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}","True");
+
+        // Welcome Page http_code
+        $col="C";
+        $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$curl_result['http_code']);
+
+        //PE Admin console
+        $col="D";
+        $url='https://'.$data[0]."master0.classroom.puppet.com";
+        $curl_result=curl_check($url);
+        $result=update_sheet_cell($config['google_sheet_id'],"${sheet}!${col}${row}:${col}${row}",$curl_result['http_code']);
+    
+    }
+
 
     break;
 }
