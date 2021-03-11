@@ -18,7 +18,7 @@ function update_sheet_cell($service, $google_sheet_id, $range, $val) {
     $values = [
         [
             // Cell values ...
-            $val
+            "test",
         ],
         // Additional rows ...
     ];

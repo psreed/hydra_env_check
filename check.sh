@@ -4,4 +4,4 @@ git pull
 echo "#################################"
 echo ""
 echo ""
-/usr/bin/php ./check.php
+/usr/bin/php -d display_errors=on ./check.php
