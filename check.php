@@ -62,10 +62,10 @@ $range="${sheet}!A${data_start_row}:AAA";
 $response = $service->spreadsheets_values->get($config['google_sheet_id'], $range);
 $rows = $response->getValues();
 
-$test="spp0309";
+//$test="spp0309";
 
 foreach($rows as $row=>$data) {
-    if ($data[0]!="spp0309") continue;
+//    if ($data[0]!="spp0309") continue;
     $row+=$data_start_row;
 
     $url='https://'.$data[0].".classroom.puppet.com";
@@ -118,7 +118,7 @@ foreach($rows as $row=>$data) {
     }
 
 
-    break;
+//    break;
 }
 
 //print_r(curl_check_200('https://spp0309.classroom.puppet.com'));
